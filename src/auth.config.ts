@@ -40,19 +40,24 @@ export const authConfig: NextAuthConfig = {
     DiscordProvider({
       clientId: process.env.DISCORD_CLIENT_ID!,
       clientSecret: process.env.DISCORD_CLIENT_SECRET!,
-      allowDangerousEmailAccountLinking: true
+      // allowDangerousEmailAccountLinking: true,
+      authorization:
+      "https://discord.com/oauth2/authorize?client_id=1216875209450328236&response_type=code&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Fapi%2Fauth%2Fcallback%2Fdiscord&scope=identify+email+guilds+guilds.members.read",
+
+
     }),
   ],
   session: {
     strategy: 'jwt',
   },
   callbacks: {
-    async signIn({ user, account, profile, email, credentials }) {
+    async signIn({ user, account, profile, email, credentials, }) {
+      console.log({ user, account, profile,email, credentials, })
       const dbUser = await prisma.user.findUnique({ where: { email: user.email ?? 'no-email' } });
       if (dbUser?.isActive === false) {
         return '/auth/login?error=unauthorized'
       }
-      if ( dbUser && !dbUser?.image ){
+      if (dbUser && !dbUser?.image) {
         await prisma.user.update({
           where: {
             id: dbUser?.id
@@ -61,7 +66,7 @@ export const authConfig: NextAuthConfig = {
             image: user.image
           }
         })
-      
+
       }
 
       return true
@@ -79,16 +84,23 @@ export const authConfig: NextAuthConfig = {
       // }
       return true;
     },
-    async jwt({ token, user }) {
+    async jwt({ token, user, account, profile, }) {
+      if (account) {
+        token.accessToken = account.access_token
+        console.log(token.accessToken);
+      }
+
       if (user) {
         token.data = user
       }
-      
+  
       return token
     },
     async session({ session, token, user }) {
-      
-      session.user = token.data as any;
+
+      const data = {...token.data as any, token: token.accessToken  } 
+      session.user = data;
+     
       return session;
     },
   },

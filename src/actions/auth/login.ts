@@ -28,13 +28,11 @@ export const login = async (email: string, password: string) => {
 export const providerLogin = async (
   provider?: LiteralUnion<BuiltInProviderType> | undefined,
   options?: SignInOptions | undefined,
-  authorizationParams?: SignInAuthorizationParams | undefined
+  // authorizationParams?: SignInAuthorizationParams | undefined
 ) => {
   try {
-    
-  
-    return signIn(provider, options, authorizationParams);
-    
+      
+    return signIn(provider, options);
   } catch (error) {
       console.log(error)
 
