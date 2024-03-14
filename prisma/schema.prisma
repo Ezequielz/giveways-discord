@@ -13,10 +13,7 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-enum Role {
-  admin
-  user
-}
+
 
 // Auth.js
 
@@ -48,6 +45,18 @@ model Session {
   user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+}
+enum Role {
+  admin
+  user
+}
+
 model User {
   id            String    @id @default(uuid())
   name          String?
@@ -60,14 +69,48 @@ model User {
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
 
-  accounts Account[]
-  sessions Session[]
+  accounts     Account[]
+  sessions     Session[]
+  participants Participant[]
 }
 
-model VerificationToken {
-  identifier String
-  token      String   @unique
-  expires    DateTime
+// Giveway
 
-  @@unique([identifier, token])
+model Giveaway {
+  id               String @id @default(uuid())
+  name             String
+  status           Boolean @default(true)
+  effectiveDate    DateTime
+  participantLimit Int?
+  quantityWinners  Int?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  prizes       Prize[]
+  participants Participant[]
 }
+
+model Participant {
+  user       User     @relation(fields: [userId], references: [id])
+  userId     String
+  giveaway   Giveaway @relation(fields: [giveawayId], references: [id])
+  giveawayId String
+  createdAt  DateTime @default(now())
+  winner     Boolean  @default(false)
+
+  @@id([userId, giveawayId])
+}
+
+model Prize {
+  id          String   @id @default(uuid())
+  name        String
+  description String
+  image       String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  giveaway   Giveaway @relation(fields: [giveawayId], references: [id])
+  giveawayId String
+}
+
