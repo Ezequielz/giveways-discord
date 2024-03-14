@@ -17,7 +17,7 @@ export default async function () {
         ) : (
           <div  className="w-fit">
                 <span>Inicia session para participar</span>
-                <DiscordBtn />
+                <DiscordBtn label="Continuar con discord" />
             </div>
         )
       }

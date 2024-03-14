@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import { auth } from '@/auth.config';
 import { LogoutBtn } from './LogoutBtn';
+import { DiscordBtn } from '../DiscordBtn';
 
 
 export const Navbar = async () => {
@@ -24,10 +25,7 @@ export const Navbar = async () => {
             {/* MENU */}
             {
                 !session?.user ? (
-                    <Link href={'/auth/login'} className="flex items-center">
-
-                        Login
-                    </Link>
+                    <DiscordBtn />
 
                 ) : (
                     <LogoutBtn />

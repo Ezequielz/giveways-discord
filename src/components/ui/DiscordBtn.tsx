@@ -1,15 +1,18 @@
 'use client'
-import { providerLogin } from "@/actions";
+import { Login } from "@/actions";
 
+interface Props {
+    label?: string
+}
 
-export const DiscordBtn = () => {
+export const DiscordBtn = ({ label }: Props) => {
 
     const oauthLogin = async () => {
   
    
         try {
           
-            await providerLogin('discord');
+            await Login('discord');
 
         } catch (error) {
             console.log(error);
@@ -23,7 +26,7 @@ export const DiscordBtn = () => {
         <button
             onClick={oauthLogin}
             type="button"
-            className="w-full justify-center flex items-center bg-white border border-gray-300 rounded-lg shadow-md px-6 py-2 text-sm font-medium text-gray-800 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500">
+            className="w-fit justify-center flex items-center bg-white border border-gray-300 rounded-lg shadow-md px-6 py-2 text-sm font-medium text-gray-800 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500">
 
             <svg className="h-6 w-6 mr-2"
                 width="800px" height="800px" viewBox="0 -28.5 256 256" version="1.1" preserveAspectRatio="xMidYMid">
@@ -36,7 +39,7 @@ export const DiscordBtn = () => {
                 </g>
             </svg>
 
-            <span>Continuar con Discord</span>
+            <span> {label}</span>
 
         </button>
     )
