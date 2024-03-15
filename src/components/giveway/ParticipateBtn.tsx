@@ -1,27 +1,62 @@
 'use client'
 
 import { useEffect, useState } from 'react';
-import { checkUserMember } from '@/actions';
+import { addParticipantBySlugGiveway, checkUserMember, checkUserParticipate } from '@/actions';
+import { useRouter } from 'next/navigation';
+import { set } from 'react-hook-form';
 
+interface Props {
+    slug: string;
+}
 
+export const ParticipateBtn = ({ slug }: Props) => {
 
-export const ParticipateBtn = () => {
-
-    const [isMember, setIsMember] = useState(false)
-
+    const [isMember, setIsMember] = useState(true)
+    const [isParticipate, setisParticipate] = useState(false)
+    const router = useRouter()
     useEffect(() => {
-        const checkUser = async () => {
-            return await checkUserMember()
+        const checkParticipate = async () => {
+            return await checkUserParticipate(slug)
         }
-        checkUser().then(res => {
-            if (!res.ok) return;
+        checkParticipate().then(res => {
+       
+            if (!res.ok) {
+                setisParticipate(false)
+                return;
+            }else{
 
-            setIsMember(true)
-
+                setisParticipate(true)
+                return;
+            }
         })
-    }, [])
+    }, [slug])
 
- 
+    // useEffect(() => {
+    //     const checkUser = async () => {
+    //         return await checkUserMember()
+    //     }
+    //     checkUser().then(res => {
+    //         if (!res.ok) return;
+
+    //         setIsMember(true)
+
+    //     })
+    // }, [])
+
+    const handleParticipate = async () => {
+        
+        const res = await checkUserMember()
+        if (!res.ok) {
+            setIsMember(false);
+            return
+        }
+
+        const { ok } = await addParticipantBySlugGiveway(slug)
+        if (ok) {
+            setisParticipate(true)
+        }
+    }
+
 
     return (
         <>
@@ -37,14 +72,20 @@ export const ParticipateBtn = () => {
                         <span className="relative  group-hover:text-white">Unete a DevTalles para participar</span>
                     </a>
                 ) : (
+                    
                     <button
-                        onClick={() => { console.log('participando') }}
+                        onClick={() => { handleParticipate() }}
                         type='submit'
-                        disabled={!isMember}
+                        disabled={!isMember || isParticipate}
                         className="w-fit p-2 group relative h-12 overflow-hidden rounded-lg bg-white text-lg shadow"
                     >
-                        <div className="absolute inset-0 w-3 bg-gradient-to-tr from-violet-600 to-violet-400 shadow-blue-500/40 transition-all duration-[250ms] ease-out group-hover:w-full"></div>
-                        <span className="relative text-black group-hover:text-white">Participar</span>
+                        {
+                            !isParticipate && (
+
+                                <div className="absolute inset-0 w-3 bg-gradient-to-tr from-violet-600 to-violet-400 shadow-blue-500/40 transition-all duration-[250ms] ease-out group-hover:w-full"></div>
+                            )
+                        }
+                        <span className="relative text-black group-hover:text-black"> {isParticipate ? 'Ya estás participando' : 'Participar'} </span>
                     </button>
                 )
             }

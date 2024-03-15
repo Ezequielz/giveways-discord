@@ -12,7 +12,7 @@ export const Navbar = async () => {
     const session = await auth();
 
     return (
-        <nav className="flex  px-3 lg:px-10  justify-between items-center">
+        <nav className="flex  px-3 lg:px-10 py-2 justify-between items-center">
 
             {/* Logo */}
             <div className='relative py-3'>

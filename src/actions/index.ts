@@ -9,6 +9,8 @@ export * from './auth/logout';
 export * from './discord/check-user-member';
 
 
+export * from './giveways/add-participant-by-slug-giveway';
+export * from './giveways/check-user-participate';
 export * from './giveways/create-giveway';
 export * from './giveways/create-prize';
 export * from './giveways/get-all-active-giveways';
