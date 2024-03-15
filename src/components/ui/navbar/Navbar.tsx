@@ -2,9 +2,9 @@
 
 import Link from 'next/link';
 import { auth } from '@/auth.config';
-import { LogoutBtn } from './LogoutBtn';
-import { DiscordBtn } from '../DiscordBtn';
+import { DiscordBtn } from '../login/DiscordBtn';
 import { Avatar } from './Avatar';
+import Image from 'next/image';
 
 
 export const Navbar = async () => {
@@ -18,7 +18,12 @@ export const Navbar = async () => {
             <div className='relative py-3'>
                 <Link
                     href="/">
-                    Logo
+                    <Image 
+                        src={'/codequest/LOGOBLANCO.png'}
+                        alt='logo devtalles'
+                        width={100}
+                        height={50}
+                    />
                 </Link>
             </div>
 

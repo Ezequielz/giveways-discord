@@ -1,7 +1,7 @@
 'use server'
 
 import { auth } from "@/auth.config"
-import { Prize, Role } from "@prisma/client"
+import { Prize, Role, StatusGiveway } from "@prisma/client"
 import prisma from '@/lib/prisma';
 
 export const createPrizeByGiveway = async (prizesToSave: Prize[], givewayId: string) => {
@@ -23,7 +23,8 @@ export const createPrizeByGiveway = async (prizesToSave: Prize[], givewayId: str
                 id: givewayId,
             },
             select: {
-                name: true,
+                id: true,
+                slug: true,
                 quantityWinners: true,
                 prizes: true
             }
@@ -56,12 +57,22 @@ export const createPrizeByGiveway = async (prizesToSave: Prize[], givewayId: str
         })
 
 
-
+        if (prizes.length !== 0) {
+            await prisma.giveway.update({
+                where: {
+                    id: giveway?.id
+                },
+                data: {
+                    status: StatusGiveway.activo
+                }
+            })
+        }
+        
 
         return {
             ok: true,
             prizes: prizes,
-            givewayName: giveway?.name,
+            givewaySlug: giveway?.slug,
         }
 
 

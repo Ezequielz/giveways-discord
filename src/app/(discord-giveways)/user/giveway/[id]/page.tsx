@@ -1,8 +1,10 @@
+import { Title } from "@/components"
 
 export default function () {
   return (
     <div>
-      <h1>detalles del sorteo que participo el usuario</h1>
+      <Title title="Detalles del sorteo que participo el usuario"/>
+     
     </div>
   );
 }

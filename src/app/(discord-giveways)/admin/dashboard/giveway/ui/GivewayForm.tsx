@@ -24,14 +24,24 @@ export const GivewayForm = ({ active }: Props) => {
     const path = usePathname();
 
     watch('quantityWinners')
-    
+
     const onSubmit: SubmitHandler<Giveway> = async (data) => {
 
         setErrorMessage('');
-        console.log(data)
+       
+
+        data.slug = data.name
+            .trim()
+            .toLowerCase()
+            .replace(/\s+/g, '_') //  espacios con guiones bajos
+            .replace(/[^\w\-]+/g, '') // quitar todos los caracteres no alfanuméricos excepto guiones bajos
+            .replace(/\-\-+/g, '_') // quitar múltiples guiones bajos con uno solo
+            .replace(/^-+/, '') // quitar los guiones bajos del principio del texto
+            .replace(/-+$/, '');
         // server action
+       
         const resp = await createGiveway(data);
-        console.log(resp)
+        
 
         if (!resp.ok) {
             setErrorMessage(resp.message)
@@ -52,13 +62,14 @@ export const GivewayForm = ({ active }: Props) => {
             )
 
             }
-            <h2>Sorteo</h2>
+            
             <div className='flex flex-col justify-center gap-1'>
                 {/* Name */}
                 <div className=' relative'>
-
+                <label htmlFor="name">Nombre</label>
                     <input
                         type="text"
+                        id='name'
                         autoFocus
                         placeholder="Nombre del sorteo"
                         className={
@@ -69,9 +80,11 @@ export const GivewayForm = ({ active }: Props) => {
                                 }
                             )
                         }
-                        {...register("name", { required: true })}
+                        {...register("name", { required: true, minLength: 3, maxLength: 50 })}
                     />
-
+                    {errors?.name?.type === 'required' && <p className='text-red-500'>Nombre del sorteo es requerido</p>}
+                    {errors?.name?.type === 'minLength' && <p className='text-red-500'>Minimo 3 caracteres</p>}
+                    {errors?.name?.type === 'maxLength' && <p className='text-red-500'>Máximo 50 caracteres</p>}
 
 
                 </div >
@@ -94,10 +107,12 @@ export const GivewayForm = ({ active }: Props) => {
                                     }
                                 )
                             }
-                            {...register("quantityWinners", { min: 1, max: 3 })}
+                            {...register("quantityWinners", { required: true, min: 1, max: 3 })}
                         // onChange={(e) => onQuantityWinnersChanged(parseInt(e.target.value))}
                         />
-
+                        {errors?.quantityWinners?.type === 'min' && <p className='text-red-500'>Minimo 1 ganador</p>}
+                        {errors?.quantityWinners?.type === 'max' && <p className='text-red-500'>Máximo 3 ganadores</p>}
+                        {errors?.quantityWinners?.type === 'required' && <p className='text-red-500'>Ganador es requerido</p>}
 
                     </div>
 
@@ -112,13 +127,14 @@ export const GivewayForm = ({ active }: Props) => {
                                 clsx(
                                     "mt-2 p-2 border rounded-md bg-gray-200 text-slate-800",
                                     {
-                                        'border-red-500': errors.quantityWinners,
+                                        'border-red-500': errors.participantLimit,
                                     }
                                 )
                             }
-                            {...register("participantLimit", { min: 0 })}
+                            {...register("participantLimit", { required: true, min: 0 })}
                         />
 
+                        {errors?.participantLimit?.type === 'min' && <p className='text-red-500'>Minimo 0 = infinito</p>}
 
                     </div>
 
@@ -136,6 +152,7 @@ export const GivewayForm = ({ active }: Props) => {
                             }
                             {...register("effectiveDate", { required: true })}
                         />
+                        {errors?.effectiveDate?.type === 'required' && <p className='text-red-500'>Fecha del sorteo es requerido</p>}
                     </div>
 
                     <div className={
@@ -149,7 +166,7 @@ export const GivewayForm = ({ active }: Props) => {
 
                         <button
                             disabled={isSubmitting}
-                            className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 mt-2 px-4 rounded'
+                            className='bg-violet-500 hover:bg-violet-700 text-white font-bold py-2 mt-2 px-4 rounded'
                         >
                             <span className="z-5">{isSubmitting ? 'Creando...' : 'Confirmar datos del sorteo'}</span>
 
@@ -160,7 +177,7 @@ export const GivewayForm = ({ active }: Props) => {
 
                 </div>
 
-    
+
                 {/* BUTTON */}
 
 

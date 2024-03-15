@@ -75,10 +75,17 @@ model User {
 
 // Giveway
 
+enum StatusGiveway {
+  activo
+  pendiente
+  finalizado
+}
+
 model Giveway {
   id               String   @id @default(uuid())
   name             String
-  status           Boolean  @default(true)
+  slug             String
+  status           StatusGiveway @default(pendiente)
   effectiveDate    DateTime
   participantLimit Int?
   quantityWinners  Int?
@@ -93,7 +100,7 @@ model Giveway {
 model Participant {
   user       User     @relation(fields: [userId], references: [id])
   userId     String
-  giveaway   Giveway @relation(fields: [giveawayId], references: [id])
+  giveaway   Giveway  @relation(fields: [giveawayId], references: [id])
   giveawayId String
   createdAt  DateTime @default(now())
   winner     Boolean  @default(false)
@@ -109,6 +116,6 @@ model Prize {
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 
-  giveaway   Giveway @relation(fields: [giveawayId], references: [id])
+  giveaway   Giveway @relation(fields: [giveawayId], references: [id], onDelete: Cascade)
   giveawayId String
 }

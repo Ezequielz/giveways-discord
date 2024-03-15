@@ -5,6 +5,7 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { Prize } from "@prisma/client";
 import { createPrizeByGiveway } from "@/actions";
 import { useRouter } from "next/navigation";
+import { Subtitle } from "@/components";
 
 interface PrizeFormProps {
     id: string;
@@ -35,52 +36,56 @@ export const PrizesForm = ({ id, quantity }: PrizeFormProps) => {
             prizes.push(newPrize)
         })
 
-        const { ok, givewayName, error } = await createPrizeByGiveway(prizes, id)
+        const { ok, givewaySlug, error } = await createPrizeByGiveway(prizes, id)
        
         if (ok) {
-            router.push(`/giveway/${givewayName}`)
+            router.push(`/giveway/${givewaySlug}`)
         }
 
     };
 
     return (
-        <form onSubmit={handleSubmit(onSubmit)} className='bg-slate-600 p-4 rounded-xl flex gap-1 justify-around'>
-            {Array.from({ length: quantity }, (_, index) => index + 1).map((_, index) => (
-                <div key={index} className='flex flex-col gap-2'>
-                    <input
-                        type="text"
-                        placeholder="Nombre del premio"
-                        className={clsx("w-full p-2 border rounded-md bg-gray-200 text-slate-800", { 'border-red-500': errors[index]?.name })}
-                        {...register(`${index}.name`, { required: true })}
-                    />
-                    {errors[index]?.name && <p className='text-red-500'>Name is required</p>}
-
-                    <textarea
-                        placeholder="Descripcion del sorteo"
-                        className={clsx("w-full p-2 border rounded-md bg-gray-200 text-slate-800", { 'border-red-500': errors[index]?.description })}
-                        {...register(`${index}.description`, { required: true })}
-                    />
-                    {errors[index]?.description && <p className='text-red-500'>Description is required</p>}
-
-                    <div className='flex flex-col p-2 border rounded-md bg-gray-200'>
-                        <Image
-                            src={'/default-image.jpg'}
-                            alt=''
-                            width={100}
-                            height={100}
-                            className='w-full p-2'
-                        />
+        <form onSubmit={handleSubmit(onSubmit)} className='justify-around mt-2'>
+            <div className="flex gap-4  ">
+                {Array.from({ length: quantity }, (_, index) => index + 1).map((_, index) => (
+                    <div key={index} className='flex flex-col gap-2  bg-violet-600 p-4  rounded-xl'>
+                        <Subtitle subtitle={`${index + 1}º Premio`}/>
                         <input
-                            type="file"
-                            accept="image/png, image/jpeg, image/avif"
-                            className={clsx("w-full text-slate-800", { 'border-red-500': errors[index]?.image })}
-                            {...register(`${index}.image`, { required: true })}
+                            type="text"
+                            placeholder="Nombre del premio"
+                            className={clsx("w-full p-2 border rounded-md bg-gray-200 text-slate-800", { 'border-red-500': errors[index]?.name })}
+                            {...register(`${index}.name`, { required: true })}
                         />
+                        {errors[index]?.name && <p className='text-red-500'>Name is required</p>}
+
+                        <textarea
+                            placeholder="Descripcion del sorteo"
+                            className={clsx("w-full p-2 border rounded-md bg-gray-200 text-slate-800", { 'border-red-500': errors[index]?.description })}
+                            {...register(`${index}.description`, { required: true })}
+                        />
+                        {errors[index]?.description && <p className='text-red-500'>Description is required</p>}
+
+                        <div className='flex flex-col p-2 border rounded-md bg-gray-200'>
+                            <Image
+                                src={'/default-image.jpg'}
+                                alt=''
+                                width={100}
+                                height={100}
+                                className='w-full p-2'
+                            />
+                            <input
+                                type="file"
+                                accept="image/png, image/jpeg, image/avif"
+                                className={clsx("w-full text-slate-800", { 'border-red-500': errors[index]?.image })}
+                                {...register(`${index}.image`, { required: true })}
+                            />
+                        </div>
+                        {errors[index]?.image && <p className='text-red-500'>Image is required</p>}
                     </div>
-                    {errors[index]?.image && <p className='text-red-500'>Image is required</p>}
-                </div>
-            ))}
-            <button type="submit" className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 mt-2 px-4 rounded'>
+                ))}
+
+            </div>
+            <button type="submit" className='bg-violet-500 hover:bg-violet-700 text-white font-bold py-2 my-2 px-4 rounded'>
                 Crear Sorteo
             </button>
         </form>

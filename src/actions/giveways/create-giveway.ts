@@ -6,7 +6,7 @@ import prisma from '@/lib/prisma';
 
 
 
-export const createGiveway = async (giveway : Giveway) => {
+export const createGiveway = async (giveway: Giveway) => {
     const session = await auth()
 
     if (session?.user.role !== Role.admin) {
@@ -18,13 +18,16 @@ export const createGiveway = async (giveway : Giveway) => {
 
     try {
 
+      
 
-       const newGiveway = await prisma.giveway.create({
+
+        const newGiveway = await prisma.giveway.create({
             data: {
                 ...giveway,
-                quantityWinners: giveway.quantityWinners ? +giveway.quantityWinners : 1 ,
-                participantLimit: giveway.participantLimit! >= 1 ? giveway.participantLimit : null,
+                quantityWinners: giveway.quantityWinners ? +giveway.quantityWinners : 1,
+                participantLimit: giveway.participantLimit! >= 1 ? +giveway.participantLimit! : null,
                 effectiveDate: new Date(giveway.effectiveDate),
+                
             },
         })
 

@@ -1,4 +1,5 @@
-import { getGivewayByName } from "@/actions";
+import { GivewayDetail, Title } from "@/components";
+import { Suspense } from "react";
 
 interface Props {
   params: {
@@ -7,15 +8,15 @@ interface Props {
 }
 
 export default async function ({params}: Props) {
-  const giveway = await getGivewayByName(params.slug)
-  console.log(giveway)
+  
   return (
     <div>
-      <h1>Detalle del sorteo activo</h1>
-      <pre>
-        {JSON.stringify(giveway, null, 2)} 
-      
-      </pre>
+      {/* <Title title="Detalle del sorteo activo"/> */}
+      <Suspense fallback={ <div>Cargando detalles...</div> }>
+        <GivewayDetail slug={params.slug}/>
+      </Suspense>
+    
+     
     </div>
   );
 }

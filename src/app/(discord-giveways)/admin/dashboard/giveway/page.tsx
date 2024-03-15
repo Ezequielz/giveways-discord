@@ -1,6 +1,9 @@
 import { getGivewayById } from "@/actions";
 import { GivewayForm } from "./ui/GivewayForm";
 import { PrizesForm } from "./ui/PrizesForm";
+import { Title } from "@/components";
+import { AddPrize } from "./ui/AddPrize";
+import { Suspense } from "react";
 
 interface Props {
     searchParams: {
@@ -11,16 +14,17 @@ interface Props {
 export default async function ({ searchParams }: Props) {
 
     const id = searchParams.id;
-    const { giveway } = await getGivewayById(id ?? '');
-    
+
+    console.log(id)
     return (
         <div>
-            <h1>Creacion de sorteo</h1>
+            <Title title="Creación de sorteo" />
             <GivewayForm active={!!id} />
             {
-                id && giveway!.quantityWinners && (
-                   
-                        <PrizesForm  id={id} quantity={giveway!.quantityWinners ?? 1}/>
+                id && (
+                    <Suspense fallback={ <div>Cargando creacion de regalos...</div> }>
+                        <AddPrize id={id} />
+                    </Suspense>
 
                 )
             }
