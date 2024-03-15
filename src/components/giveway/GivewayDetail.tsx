@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import { auth } from '@/auth.config';
-import { StatusGiveway } from '@prisma/client';
+import { Role, StatusGiveway } from '@prisma/client';
 import { getGivewayBySlug } from '@/actions'
 import { DiscordBtn, ParticipateBtn, Title } from '..';
 import { dateFormat } from '@/helpers';
@@ -31,7 +31,7 @@ export const GivewayDetail = async ({ slug }: Props) => {
                     <div className="flex gap-2 justify-around items-start">
                         <div className=' w-full flex flex-col items-center justify-start'>
                             <div className='flex flex-col justify-start'>
-                               
+
                                 <span>Limite de participantes: {giveway.participantLimit ?? 'ilimitados'} </span>
                                 <span>Ganadores: {giveway.quantityWinners} </span>
                                 <span>fecha del sorteo: {dateFormat(giveway.effectiveDate)} </span>
@@ -95,6 +95,36 @@ export const GivewayDetail = async ({ slug }: Props) => {
                 <div className="w-1/5 border-2 border-violet-500 p-2 rounded-xl h-fit">
                     Participantes: {giveway?.participants.length}
                     <div className=''>
+                        {
+                            giveway?.participants.map(participant => (
+                                <ol
+                                    key={participant.user.discordId}
+
+                                >
+                                    <li className='flex gap-2 items-center'>
+                                        <Image
+                                            src={participant.user.image ?? '/default-image.png'}
+                                            alt={participant.user.name ?? ''}
+                                            width={20}
+                                            height={20}
+                                            className='rounded-full'
+                                        />
+                                        <span className='flex flex-col'>
+                                            {participant.user.name}
+
+                                            {
+                                                session?.user.role === Role.admin && (
+                                                    <span className='text-violet-500/50'>
+                                                        -  {participant.user.discordId}
+                                                    </span>
+                                                )
+                                            }
+                                        </span>
+
+                                    </li>
+                                </ol>
+                            ))
+                        }
                         {/* TODO mostrar participantes */}
 
                     </div>

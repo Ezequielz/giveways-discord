@@ -62,6 +62,7 @@ export const addParticipantBySlugGiveway = async (slug: string) => {
 
         revalidatePath('/');
         revalidatePath('/giveway');
+        revalidatePath('/giveways');
         revalidatePath(`/giveway/${slug}`);
 
         return {

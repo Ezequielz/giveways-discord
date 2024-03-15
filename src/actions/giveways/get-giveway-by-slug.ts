@@ -17,7 +17,18 @@ export const getGivewayBySlug = async (slug: string, status: StatusGiveway) => {
             },
             include: {
                 prizes: true,
-                participants: true
+                participants: {
+                    select: {
+                        user: {
+                            select: {
+                                name: true,
+                                image: true,
+                                discordId: true
+                            }
+                           
+                        }
+                    }
+                }
             }
         })
 

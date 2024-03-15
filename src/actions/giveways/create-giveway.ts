@@ -3,6 +3,7 @@
 import { auth } from "@/auth.config"
 import { Giveway, Role } from "@prisma/client"
 import prisma from '@/lib/prisma';
+import { revalidatePath } from "next/cache";
 
 
 
@@ -30,6 +31,7 @@ export const createGiveway = async (giveway: Giveway) => {
                 
             },
         })
+        revalidatePath('/giveways');
 
         return {
             ok: true,
