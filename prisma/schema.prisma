@@ -75,7 +75,7 @@ model User {
 
 // Giveway
 
-model Giveaway {
+model Giveway {
   id               String   @id @default(uuid())
   name             String
   status           Boolean  @default(true)
@@ -93,7 +93,7 @@ model Giveaway {
 model Participant {
   user       User     @relation(fields: [userId], references: [id])
   userId     String
-  giveaway   Giveaway @relation(fields: [giveawayId], references: [id])
+  giveaway   Giveway @relation(fields: [giveawayId], references: [id])
   giveawayId String
   createdAt  DateTime @default(now())
   winner     Boolean  @default(false)
@@ -109,6 +109,6 @@ model Prize {
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 
-  giveaway   Giveaway @relation(fields: [giveawayId], references: [id])
+  giveaway   Giveway @relation(fields: [giveawayId], references: [id])
   giveawayId String
 }

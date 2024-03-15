@@ -1,12 +1,12 @@
 'use server'
 
 import { auth } from "@/auth.config"
-import { Giveway, Role } from "@prisma/client"
+import { Role } from "@prisma/client"
 import prisma from '@/lib/prisma';
 
 
 
-export const createGiveway = async (giveway : Giveway) => {
+export const getGivewayById = async (id: string) => {
     const session = await auth()
 
     if (session?.user.role !== Role.admin) {
@@ -19,18 +19,19 @@ export const createGiveway = async (giveway : Giveway) => {
     try {
 
 
-       const newGiveway = await prisma.giveway.create({
-            data: {
-                ...giveway,
-                quantityWinners: giveway.quantityWinners ? +giveway.quantityWinners : 1 ,
-                participantLimit: giveway.participantLimit! >= 1 ? giveway.participantLimit : null,
-                effectiveDate: new Date(giveway.effectiveDate),
+        const giveway = await prisma.giveway.findFirst({
+            where: {
+                id: id
             },
+            include: {
+                prizes: true,
+                participants: true
+            }
         })
 
         return {
             ok: true,
-            giveway: newGiveway,
+            giveway: giveway,
         }
 
 

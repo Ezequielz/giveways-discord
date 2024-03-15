@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { auth } from '@/auth.config';
 import { LogoutBtn } from './LogoutBtn';
 import { DiscordBtn } from '../DiscordBtn';
+import { Avatar } from './Avatar';
 
 
 export const Navbar = async () => {
@@ -28,7 +29,7 @@ export const Navbar = async () => {
                     <DiscordBtn />
 
                 ) : (
-                    <LogoutBtn />
+                    <Avatar img={session.user.image!}/>
                 )
             }
 

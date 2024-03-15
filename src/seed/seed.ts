@@ -1,4 +1,4 @@
-import bcryptjs from 'bcryptjs';
+
 import { Role } from '@prisma/client';
 
 export interface SeedUser {
@@ -6,7 +6,7 @@ export interface SeedUser {
     email: string;
     emailVerified?: Date;
     role?: Role;
-    password: string;
+    discordId: string;
     image?: string;
 };
 
@@ -17,19 +17,9 @@ interface SeedData {
 export const initialData: SeedData = {
     users: [
         {
-            name: 'Usuario Uno',
-            email: 'user1@gmail.com',
-            password: bcryptjs.hashSync('123456'),
-        },
-        {
-            name: 'Usuario Dos',
-            email: 'user2@gmail.com',
-            password: bcryptjs.hashSync('123456'),
-        },
-        {
-            name: 'Admin',
-            email: 'admin@gmail.com',
-            password: bcryptjs.hashSync('123456'),
+            name: 'Ezequiel Zapata',
+            email: 'zapata.ed1989@gmail.com',
+            discordId: '480218023551041557',
             role: Role.admin,
         }
     ],
