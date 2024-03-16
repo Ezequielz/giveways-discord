@@ -12,7 +12,7 @@ export const GivewaysBtns = ({ id, slug }: Props) => {
 
             <td
                 className="px-6 text-sm leading-5  whitespace-no-wrap border-b border-gray-200">
-                <Link href={`/giveway/${slug}`} >
+                <Link href={`/admin/dashboard/giveway/${slug}`} >
 
                     ver
                 </Link>

@@ -8,7 +8,7 @@ import { Suspense } from "react";
 interface Props {
     searchParams: {
         id?: string
-    }
+    },
 }
 
 export default async function ({ searchParams }: Props) {

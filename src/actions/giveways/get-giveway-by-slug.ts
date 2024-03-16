@@ -4,7 +4,7 @@ import { sleep } from '@/helpers';
 import prisma from '@/lib/prisma';
 import { StatusGiveway } from '@prisma/client';
 
-export const getGivewayBySlug = async (slug: string, status: StatusGiveway) => {
+export const getGivewayBySlug = async (slug: string, status?: StatusGiveway) => {
   
 // await sleep(5)
     try {

@@ -2,7 +2,6 @@
 
 export * from './admin/giveways/table/GivewaysTable';
 export * from './admin/ui/AdminAside';
-export * from './admin/ui/StatusSelect';
 
 export * from './giveways/Giveways';
 export * from './giveway/ParticipateBtn';
