@@ -63,6 +63,7 @@ export const ParticipateBtn = ({ slug }: Props) => {
             {
                 !isMember ? (
                     <a
+                        onClick={() => setIsMember(true)}
                         href="https://discord.gg/794jxEqX"
                         target='_blank'
                         rel="noreferrer"

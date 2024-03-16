@@ -125,7 +125,7 @@ export const GivewayDetail = async ({ slug }: Props) => {
                                 </ol>
                             ))
                         }
-                        {/* TODO mostrar participantes */}
+                      
 
                     </div>
                 </div>

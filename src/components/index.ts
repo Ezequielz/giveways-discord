@@ -13,6 +13,8 @@ export * from './ui/sidebar/Sidebar';
 export * from './ui/text/Title';
 export * from './ui/text/Subtitle';
 
+export * from './user/giveways/GivewaysParticipate';
+
 
 export * from './giveway/ParticipateBtn';
 export * from './giveway/GivewayDetail';
