@@ -1,4 +1,5 @@
 import { auth } from "@/auth.config";
+import { AdminAside } from "@/components";
 import { redirect } from "next/navigation";
 
 export default async function AdminLayout({ children }: {
@@ -12,6 +13,7 @@ export default async function AdminLayout({ children }: {
 
     return (
         <div>
+            <AdminAside />
             {children}
         </div>
     );

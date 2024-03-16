@@ -68,23 +68,16 @@ export const Sidebar = () => {
                 {
                     isAuthenticated && (
                         <>
-                            <Link
-                                href="/user/profile"
-                                onClick={() => closeMenu()}
-                                className="flex items-center mt-6 p-2 hover:bg-gray-100 hover:text-neutral-900 rounded transition-all"
-                            >
-                                <span className="ml-3 text-xl">Perfil</span>
-                            </Link>
+
 
                             <Link
-                                href="/user/giveways"
+                                href="/giveways"
                                 onClick={() => closeMenu()}
                                 className="flex items-center mt-6 p-2 hover:bg-gray-100 hover:text-neutral-900 rounded transition-all"
                             >
                                 <span className="ml-3 text-xl">Sorteos</span>
                             </Link>
-
-                    
+                        
                             <button
                                 className="flex w-full items-center mt-6 p-2 hover:bg-gray-100 hover:text-neutral-900 rounded transition-all"
                                 onClick={() => logout()}
