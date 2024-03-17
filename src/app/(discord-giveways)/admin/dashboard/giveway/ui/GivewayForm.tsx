@@ -8,11 +8,10 @@ import { Giveway } from '@prisma/client';
 import { dateFormat } from '@/helpers';
 
 interface Props {
-    active: boolean,
-    slug?: string,
+    active: boolean;
 }
 
-export const GivewayForm = ({ active, slug }: Props) => {
+export const GivewayForm = ({ active}: Props) => {
 
     const router = useRouter();
     const [errorMessage, setErrorMessage] = useState('');
@@ -25,26 +24,7 @@ export const GivewayForm = ({ active, slug }: Props) => {
     });
     const path = usePathname();
 
-    useEffect(() => {
-        if (!slug) return;
-        
     
-        const getGiveway = async () => {
-        if (!slug) return;
-        const { ok, giveway } = await getGivewayBySlug(slug)
-
-        if (!ok) return;
-        setValue('name', giveway!.name)
-        setValue('quantityWinners', giveway?.quantityWinners ?? 1)
-        setValue('participantLimit', giveway?.participantLimit ?? 0)
-        setValue('effectiveDate', (giveway?.effectiveDate.toISOString().split('T')[0]) as any)
-        setValue('status', giveway!.status)
-        setValue('slug', giveway!.slug)
-
-    }
-
-    getGiveway()
-}, [slug, setValue])
 
 
     watch('quantityWinners')
@@ -53,16 +33,7 @@ const onSubmit: SubmitHandler<Giveway> = async (data) => {
 
     setErrorMessage('');
 
-    if (slug) {
-
-        const edit = await updateGiveway(data)
-        if (!edit.ok) {
-            setErrorMessage(edit.message)
-            return;
-        }
-        router.replace(`${path}?id=${edit.giveway?.id}`);
-        return;
-    }
+  
 
     data.slug = data.name
         .trim()

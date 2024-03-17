@@ -1,31 +1,22 @@
 import { Suspense } from "react";
 import { GivewayForm } from "../ui/GivewayForm";
 import { AddPrize } from "../ui/AddPrize";
+import { GivewayEdit } from "./edit/Givewayedit";
 
 interface Props {
     params: {
         slug: string
     },
-    searchParams: {
-        id?: string
-    },
+
 }
-export default function ({ params, searchParams }: Props) {
-    console.log(params.slug)
-    const id = searchParams.id;
-    console.log(id)
+export default function ({ params }: Props) {
+  
+    const slug = params.slug
     return (
         <div>
 
-            <GivewayForm active={!!id} slug={params.slug} />
-            {
-                id && (
-                    <Suspense fallback={<div>Cargando creacion de regalos...</div>}>
-                        <AddPrize id={id} />
-                    </Suspense>
-
-                )
-            }
+            <GivewayEdit  slug={slug} />
+    
         </div>
     );
 }

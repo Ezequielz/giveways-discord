@@ -32,6 +32,7 @@ export const getGivewayBySlug = async (slug: string, status?: StatusGiveway) => 
             }
         })
 
+      
         return {
             ok: true,
             giveway: giveway,
