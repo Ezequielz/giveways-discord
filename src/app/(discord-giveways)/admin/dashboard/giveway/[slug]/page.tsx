@@ -16,7 +16,6 @@ export default function ({ params, searchParams }: Props) {
     console.log(id)
     return (
         <div>
-            <h1>Hello Page {params.slug}</h1>
 
             <GivewayForm active={!!id} slug={params.slug} />
             {

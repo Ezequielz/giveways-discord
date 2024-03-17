@@ -11,6 +11,7 @@ export * from './admin/giveways/create-giveway';
 export * from './admin/giveways/create-prize';
 export * from './admin/giveways/get-all-giveways-by-status';
 export * from './admin/giveways/get-giveway-by-id';
+export * from './admin/giveways/update-giveway';
 
 export * from './giveways/add-participant-by-slug-giveway';
 export * from './giveways/check-user-participate';

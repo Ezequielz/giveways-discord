@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { usePathname, useRouter } from 'next/navigation';
 import clsx from 'clsx';
-import { createGiveway, getGivewayBySlug } from '@/actions';
+import { createGiveway, getGivewayBySlug, updateGiveway } from '@/actions';
 import { Giveway } from '@prisma/client';
 import { dateFormat } from '@/helpers';
 
@@ -53,6 +53,16 @@ const onSubmit: SubmitHandler<Giveway> = async (data) => {
 
     setErrorMessage('');
 
+    if (slug) {
+
+        const edit = await updateGiveway(data)
+        if (!edit.ok) {
+            setErrorMessage(edit.message)
+            return;
+        }
+        router.replace(`${path}?id=${edit.giveway?.id}`);
+        return;
+    }
 
     data.slug = data.name
         .trim()
@@ -63,6 +73,8 @@ const onSubmit: SubmitHandler<Giveway> = async (data) => {
         .replace(/^-+/, '') // quitar los guiones bajos del principio del texto
         .replace(/-+$/, ''); // quitar los guiones bajos del fin del texto
     // server action
+
+    
 
     const resp = await createGiveway(data);
 
