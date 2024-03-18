@@ -16,7 +16,7 @@ export const updateGiveway = async (giveway: Giveway) => {
             error: 'No estás autorizado para actualizar un sorteo'
         }
     }
-    console.log(giveway)
+    // console.log(giveway)
  
     try {
 

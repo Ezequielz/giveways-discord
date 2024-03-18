@@ -6,7 +6,7 @@ import prisma from '@/lib/prisma';
 
 export const updatePrize = async (prizeToSave: Prize, slug: string) => {
 
-    console.log(prizeToSave)
+    // console.log(prizeToSave)
     const session = await auth()
 
     if (session?.user.role !== Role.admin) {

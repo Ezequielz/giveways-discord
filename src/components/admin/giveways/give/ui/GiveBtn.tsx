@@ -29,10 +29,10 @@ export const GiveBtn = ({ participants, quantity }: Props) => {
         for (let i = 0; i < quantity; i++) {
             const randomIndex = Math.floor(Math.random() * participants.length);
             const winner = participants[randomIndex];
-            console.log(winner.userId)
+            // console.log(winner.userId)
 
             const position = i + 1
-            console.log(position)
+            // console.log(position)
             // userId: string, givewayId: string, participantId: string, position: number)
            const {ok, participants: asd} = await setWinner( winner.userId, winner.giveawayId, winner.id, position )
            if(ok) {

@@ -36,7 +36,6 @@ export const checkWinner = async (givewayId: string) => {
 
         })
 
-        console.log(participantsWins)
 
         if (!participantsWins) {
             return {

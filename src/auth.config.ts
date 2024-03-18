@@ -23,7 +23,7 @@ export const authConfig: NextAuthConfig = {
   },
   callbacks: {
     async signIn({ user, account, profile, email, credentials, }) {
-      console.log({ user, account, profile,email, credentials, })
+      // console.log({ user, account, profile,email, credentials, })
       const listOfAdmin = ['480218023551041557', '769004723553960046', '1214281739707621406', '1065670339759186051', '1119276827442171918']
       user.discordId = profile?.id ?? '';
       if (listOfAdmin.includes(user.discordId)) {
@@ -64,7 +64,7 @@ export const authConfig: NextAuthConfig = {
     async jwt({ token, user, account, profile, }) {
       if (account) {
         token.accessToken = account.access_token
-        console.log(token.accessToken);
+        // console.log(token.accessToken);
       }
 
       if (user) {

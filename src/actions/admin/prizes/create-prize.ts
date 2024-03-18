@@ -37,7 +37,6 @@ export const createPrizeByGiveway = async (prizesToSave: Prize[], givewayId: str
         // console.log(prizesToSave)
         // console.log(givewayId)
         const prizes = await prizesToSave.map(async (prize, index) => {
-            //TODO update del premio, obtener el id del premio o buscar como actualizarlo
             await prisma.giveway.update({
                 where: {
                     id: givewayId

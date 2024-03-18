@@ -18,7 +18,7 @@ export const PrizesForm = ({ id, prizesOfGiveway }: PrizeFormProps) => {
 
     const onSubmit: SubmitHandler<Prize[]> = async (data) => {
         const prizes: any = []
-        console.log(data)
+        // console.log(data)
         Object.values(data).map((prize, index) => {
             const { image, ...rest } = prize;
             let newImage: any = ''
