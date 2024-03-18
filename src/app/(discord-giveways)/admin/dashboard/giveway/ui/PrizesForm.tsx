@@ -66,7 +66,7 @@ export const PrizesForm = ({ id, prizesOfGiveway }: PrizeFormProps) => {
                         {errors[index]?.name && <p className='text-red-500'>Name is required</p>}
 
 
-                        <div className='flex flex-col p-2 border rounded-md bg-gray-200'>
+                        {/* <div className='flex flex-col p-2 border rounded-md bg-gray-200'>
                             <Image
                                 src={'/default-image.jpg'}
                                 alt=''
@@ -80,7 +80,7 @@ export const PrizesForm = ({ id, prizesOfGiveway }: PrizeFormProps) => {
                                 className={clsx("w-full text-slate-800", { 'border-red-500': errors[index]?.image })}
                                 {...register(`${index}.image`, { required: true })}
                             />
-                        </div>
+                        </div> */}
                         {errors[index]?.image && <p className='text-red-500'>Image is required</p>}
                     </div>
                 ))}

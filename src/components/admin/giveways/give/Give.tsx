@@ -48,14 +48,14 @@ export const Give = async ({ slug }: Props) => {
                                                 className="bg-violet-500/50 flex flex-col w-full p-2 gap-2"
                                             >
 
-                                                <Image
+                                                {/* <Image
                                                     // src={`/${prize.image}` ?? '/default-image.jpg'}
                                                     src={'/default-image.jpg'}
                                                     width={100}
                                                     height={100}
                                                     alt={prize.name}
                                                     className='w-full'
-                                                />
+                                                /> */}
                                                 <div className="flex flex-col">
                                                     <span>
                                                         {index + 1}º premio

@@ -44,13 +44,13 @@ export const Giveways = async () => {
                                             className="bg-violet-500/50 flex w-full p-2 gap-2"
                                         >
 
-                                            <Image
+                                            {/* <Image
                                                 // src={`/${prize.image}` ?? '/default-image.jpg'}
                                                 src={'/default-image.jpg'}
                                                 width={50}
                                                 height={50}
                                                 alt={prize.name}
-                                            />
+                                            /> */}
                                             <div className="flex flex-col">
                                                 <span>
                                                     {index + 1}º premio

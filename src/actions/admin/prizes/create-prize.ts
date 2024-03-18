@@ -28,6 +28,8 @@ export const createPrizeByGiveway = async (prizesToSave: Prize[], givewayId: str
 
         })
 
+        
+
         // if ( giveway && giveway?.prizes.length >= giveway?.quantityWinners!) {
         //     return {
         //         ok: false,
@@ -37,6 +39,7 @@ export const createPrizeByGiveway = async (prizesToSave: Prize[], givewayId: str
         // console.log(prizesToSave)
         // console.log(givewayId)
         const prizes = await prizesToSave.map(async (prize, index) => {
+           
             await prisma.giveway.update({
                 where: {
                     id: givewayId
@@ -91,3 +94,35 @@ export const createPrizeByGiveway = async (prizesToSave: Prize[], givewayId: str
         }
     }
 }
+
+// export const uploadImages = async (images: string) => {
+
+//     try {
+
+//         const uploadPromises = images.map(async (image) => {
+
+//             try {
+//                 const buffer = await image.arrayBuffer();
+//                 const base64Image = Buffer.from(buffer).toString('base64');
+//                 // subir imagen a cloudinary                                                // carpeta
+//                 return cloudinary.uploader.upload(`data:image/png;base64,${base64Image}`, { folder: 'tesloShop' })
+//                     .then(r => r.secure_url);
+//             } catch (error) {
+//                 console.log(error);
+//                 return null;
+//             }
+
+//         });
+
+//         const uploadedImages = await Promise.all(uploadPromises);
+
+//         return uploadedImages;
+
+//     } catch (error) {
+
+//         console.log(error);
+//         return null;
+
+//     }
+
+// }
