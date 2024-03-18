@@ -114,6 +114,7 @@ model Prize {
   name        String
   description String?
   image       String?
+  position    Int @default(1)
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 

@@ -4,9 +4,9 @@ import { auth } from "@/auth.config"
 import { Prize, Role, StatusGiveway } from "@prisma/client"
 import prisma from '@/lib/prisma';
 
-export const updatePrize = async (prizesToSave: Prize[], slug: string) => {
+export const updatePrize = async (prizeToSave: Prize, slug: string) => {
 
-
+    console.log(prizeToSave)
     const session = await auth()
 
     if (session?.user.role !== Role.admin) {
@@ -31,48 +31,57 @@ export const updatePrize = async (prizesToSave: Prize[], slug: string) => {
 
         })
 
-        if ( giveway && giveway?.prizes.length >= 3) {
+        if (!giveway) {
             return {
                 ok: false,
-                error: 'No se pueden crear mas premios'
+                error: 'No se encontro el sorteo'
             }
-        } 
+        }
 
-        const prizes = await prizesToSave.map(async (prize) => {
-            await prisma.giveway.update({
-                where: {
-                    slug: slug
-                },
-                select: {
-                    name: true
-                },
-                data: {
-                    prizes: {
-                        create: {
-                            ...prize,
-                        }
-                    }
-                }
-            })
+        const priceUpdated = await prisma.prize.update({
+            where: {
+                id: prizeToSave.id
+            },
+            data: {
+                ...prizeToSave
+            }
         })
 
+        if (!priceUpdated) {
+            return {
+                ok: false,
+                error: 'No se pudo actualizar el sorteo'
+            }
+        }
 
-        if (prizes.length !== 0) {
+
+        const checkPrizesOfGiveway = await prisma.prize.findMany({
+            where: {
+                giveawayId: giveway.id
+            }
+        })
+
+        checkPrizesOfGiveway.map(prize => {
+            prize.name
+        })
+        // Verificar si todos los premios tienen un nombre
+        const todosConNombre = checkPrizesOfGiveway.map(prize => prize.name !== '').every(Boolean);
+
+        // Comprobar el estado y emitir el mensaje correspondiente
+        if (todosConNombre) {
             await prisma.giveway.update({
                 where: {
-                    id: giveway?.id
+                    id: giveway.id
                 },
                 data: {
                     status: StatusGiveway.activo
                 }
             })
-        }
-        
+        } 
 
+    
         return {
             ok: true,
-            prizes: prizes,
-            givewaySlug: giveway?.slug,
         }
 
 

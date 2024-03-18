@@ -9,17 +9,17 @@ import { Subtitle } from "@/components";
 
 interface PrizeFormProps {
     id: string;
-    quantity: number;
+    prizesOfGiveway: Prize[];
 }
 
-export const PrizesForm = ({ id, quantity }: PrizeFormProps) => {
+export const PrizesForm = ({ id, prizesOfGiveway }: PrizeFormProps) => {
     const { register, handleSubmit, formState: { errors, isSubmitting } } = useForm<Prize[]>();
-    const router = useRouter()
+    const router = useRouter();
 
     const onSubmit: SubmitHandler<Prize[]> = async (data) => {
         const prizes: any = []
-
-        Object.values(data).map((prize) => {
+        console.log(data)
+        Object.values(data).map((prize, index) => {
             const { image, ...rest } = prize;
             let newImage: any = ''
 
@@ -31,15 +31,16 @@ export const PrizesForm = ({ id, quantity }: PrizeFormProps) => {
 
             let newPrize = {
                 ...rest,
+                position: index + 1,
                 image: newImage.name ?? ''
             }
-            prizes.push(newPrize)
+            prizes.push(newPrize);
         })
 
         const { ok, givewaySlug, error } = await createPrizeByGiveway(prizes, id)
-       
+        // console.log(ok)
         if (ok) {
-            router.push(`/giveway/${givewaySlug}`)
+            router.push(`/giveway/${givewaySlug}`);
         }
 
     };
@@ -47,9 +48,15 @@ export const PrizesForm = ({ id, quantity }: PrizeFormProps) => {
     return (
         <form onSubmit={handleSubmit(onSubmit)} className='justify-around mt-2'>
             <div className="flex gap-4  ">
-                {Array.from({ length: quantity }, (_, index) => index + 1).map((_, index) => (
+                {Array.from({ length: prizesOfGiveway.length }, (_, index) => index + 1).map((_, index) => (
                     <div key={index} className='flex flex-col gap-2  bg-violet-600 p-4  rounded-xl'>
-                        <Subtitle subtitle={`${index + 1}º Premio`}/>
+                        <Subtitle subtitle={`${index + 1}º Premio`} />
+                        <input
+                            type="text"
+                            className="hidden"
+                            value={prizesOfGiveway[index].id}
+                            {...register(`${index}.id`, { required: true })}
+                        />
                         <input
                             type="text"
                             placeholder="Nombre del premio"
@@ -58,12 +65,6 @@ export const PrizesForm = ({ id, quantity }: PrizeFormProps) => {
                         />
                         {errors[index]?.name && <p className='text-red-500'>Name is required</p>}
 
-                        <textarea
-                            placeholder="Descripcion del sorteo"
-                            className={clsx("w-full p-2 border rounded-md bg-gray-200 text-slate-800", { 'border-red-500': errors[index]?.description })}
-                            {...register(`${index}.description`, { required: true })}
-                        />
-                        {errors[index]?.description && <p className='text-red-500'>Description is required</p>}
 
                         <div className='flex flex-col p-2 border rounded-md bg-gray-200'>
                             <Image

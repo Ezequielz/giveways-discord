@@ -17,31 +17,15 @@ export const updateGiveway = async (giveway: Giveway) => {
         }
     }
     console.log(giveway)
-    // TODO corregir, recibo esto, necesito id o modificar a slug
-    // {
-    //     quantityWinners: '2',
-    //     participantLimit: 0,
-    //     name: 'asdasd',
-    //     effectiveDate: '2024-03-20',
-    //     status: 'pendiente',
-    //     slug: 'asdasd'
-    //   }
-    // (parameter) giveway: {
-    //     id: string;
-    //     name: string;
-    //     slug: string;
-    //     status: $Enums.StatusGiveway;
-    //     effectiveDate: Date;
-    //     participantLimit: number | null;
-    //     quantityWinners: number | null;
-    //     createdAt: Date;
-    //     updatedAt: Date;
-    // }
+ 
     try {
 
         const existGiveway = await prisma.giveway.findUnique({
             where: {
                 id: giveway.id
+            },
+            include: {
+                prizes: true
             }
         });
 
@@ -58,9 +42,10 @@ export const updateGiveway = async (giveway: Giveway) => {
             },
             data: {
                 ...giveway,
-                quantityWinners: giveway.quantityWinners ? +giveway.quantityWinners : 1,
                 participantLimit: giveway.participantLimit! >= 1 ? +giveway.participantLimit! : null,
                 effectiveDate: new Date(giveway.effectiveDate),
+                status: (+giveway.quantityWinners! === existGiveway.prizes.length) ? 'activo' : 'pendiente',
+              
             },
         })
 
@@ -72,6 +57,8 @@ export const updateGiveway = async (giveway: Giveway) => {
         };
         
         revalidatePath('/giveways');
+        revalidatePath('/admin/dashboard/giveway');
+        revalidatePath(`/admin/dashboard/giveway/${existGiveway.slug}`);
 
         return {
             ok: true,

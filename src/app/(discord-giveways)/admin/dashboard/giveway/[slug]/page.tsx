@@ -1,22 +1,22 @@
-import { Suspense } from "react";
-import { GivewayForm } from "../ui/GivewayForm";
-import { AddPrize } from "../ui/AddPrize";
-import { GivewayEdit } from "./edit/Givewayedit";
+import { Suspense } from 'react';
+import { GivewayEdit } from './edit/Givewayedit';
+import { PrizesEdit } from './edit/PrizesEdit';
 
 interface Props {
     params: {
         slug: string
     },
+};
+export default async function ({ params }: Props) {
 
-}
-export default function ({ params }: Props) {
-  
-    const slug = params.slug
+    const slug = params.slug;
+
     return (
         <div>
-
-            <GivewayEdit  slug={slug} />
-    
+            <GivewayEdit slug={slug} />
+            <Suspense fallback={<div>Cargando premios...</div>}>
+                <PrizesEdit slug={slug} />
+            </Suspense>
         </div>
     );
 }

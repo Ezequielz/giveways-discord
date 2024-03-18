@@ -5,8 +5,6 @@ import { Prize, Role, StatusGiveway } from "@prisma/client"
 import prisma from '@/lib/prisma';
 
 export const createPrizeByGiveway = async (prizesToSave: Prize[], givewayId: string) => {
-
-
     const session = await auth()
 
     if (session?.user.role !== Role.admin) {
@@ -17,7 +15,6 @@ export const createPrizeByGiveway = async (prizesToSave: Prize[], givewayId: str
     }
 
     try {
-
         const giveway = await prisma.giveway.findFirst({
             where: {
                 id: givewayId,
@@ -31,30 +28,41 @@ export const createPrizeByGiveway = async (prizesToSave: Prize[], givewayId: str
 
         })
 
-        if ( giveway && giveway?.prizes.length >= giveway?.quantityWinners!) {
-            return {
-                ok: false,
-                error: 'No se pueden crear mas premios'
-            }
-        } 
-
-        const prizes = await prizesToSave.map(async (prize) => {
+        // if ( giveway && giveway?.prizes.length >= giveway?.quantityWinners!) {
+        //     return {
+        //         ok: false,
+        //         error: 'No se pueden crear mas premios'
+        //     }
+        // } 
+        // console.log(prizesToSave)
+        // console.log(givewayId)
+        const prizes = await prizesToSave.map(async (prize, index) => {
+            //TODO update del premio, obtener el id del premio o buscar como actualizarlo
             await prisma.giveway.update({
                 where: {
                     id: givewayId
+
                 },
                 select: {
                     name: true
                 },
                 data: {
                     prizes: {
-                        create: {
-                            ...prize,
+                        update: {
+                            where: {
+                                id: prize.id,
+                                // position: prize.position
+                            },
+                            data: {
+                                ...prize,
+                            }
+
                         }
                     }
                 }
             })
-        })
+
+        });
 
 
         if (prizes.length !== 0) {

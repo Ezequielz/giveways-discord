@@ -1,7 +1,7 @@
 import { Suspense } from 'react';
 import { GivewayForm } from './ui/GivewayForm';
 import { Title } from '@/components';
-import { AddPrize } from './ui/AddPrize';
+import { AddPrizes } from './ui/AddPrizes';
 
 interface Props {
     searchParams: {
@@ -20,7 +20,7 @@ export default async function ({ searchParams }: Props) {
             {
                 id && (
                     <Suspense fallback={ <div>Cargando creacion de regalos...</div> }>
-                        <AddPrize id={id} />
+                        <AddPrizes id={id} />
                     </Suspense>
 
                 )

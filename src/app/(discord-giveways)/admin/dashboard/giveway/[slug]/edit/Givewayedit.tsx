@@ -5,11 +5,10 @@ import { usePathname, useRouter } from 'next/navigation';
 import clsx from 'clsx';
 import { getGivewayBySlug, updateGiveway } from '@/actions';
 import { Giveway } from '@prisma/client';
-import { PrizesEdit } from './PrizeEdit';
 
 
 interface Props {
- 
+
     slug: string;
 }
 
@@ -53,10 +52,9 @@ export const GivewayEdit = ({ slug }: Props) => {
     watch('quantityWinners')
 
     const onSubmit: SubmitHandler<Giveway> = async (data) => {
-
         setErrorMessage('');
 
-        
+
         const edit = await updateGiveway(data);
         if (!edit.ok) {
             setErrorMessage(edit.message)
@@ -98,7 +96,7 @@ export const GivewayEdit = ({ slug }: Props) => {
                 </div >
                 <div className='flex gap-2 items-center'>
                     {/* Quantity Winners */}
-                    <div className=' flex flex-col gap-0 p-2'>
+                    {/* <div className=' flex flex-col gap-0 p-2'>
                         <label htmlFor="quantityWinners">Ganadores</label>
                         <input
                             value={getValues('quantityWinners') ?? 1}
@@ -122,7 +120,7 @@ export const GivewayEdit = ({ slug }: Props) => {
                         {errors?.quantityWinners?.type === 'max' && <p className='text-red-500'>Máximo 3 ganadores</p>}
                         {errors?.quantityWinners?.type === 'required' && <p className='text-red-500'>Ganador es requerido</p>}
 
-                    </div>
+                    </div> */}
 
                     {/* Participant limit */}
                     <div className=' flex flex-col gap-0 p-2'>
@@ -169,7 +167,7 @@ export const GivewayEdit = ({ slug }: Props) => {
                             disabled={isSubmitting}
                             className='bg-violet-500 hover:bg-violet-700 text-white font-bold py-2 mt-2 px-4 rounded'
                         >
-                            <span className="z-5">{isSubmitting ? 'Creando...' : 'Confirmar datos del sorteo'}</span>
+                            <span className="z-5">{isSubmitting ? 'Actualizando...' : 'Actualizar sorteo'}</span>
 
                         </button>
 
@@ -179,7 +177,6 @@ export const GivewayEdit = ({ slug }: Props) => {
                 </div>
 
 
-                {/* BUTTON */}
 
 
                 <div className='relative flex justify-center p-1 mb-1'>
@@ -187,11 +184,6 @@ export const GivewayEdit = ({ slug }: Props) => {
                 </div>
 
             </div>
-
-
-
-            <PrizesEdit slug={slug}  />      
-
 
         </form>
     )

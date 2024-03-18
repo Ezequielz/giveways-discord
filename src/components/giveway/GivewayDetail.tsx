@@ -35,6 +35,7 @@ export const GivewayDetail = async ({ slug }: Props) => {
                                 <span>Limite de participantes: {giveway.participantLimit ?? 'ilimitados'} </span>
                                 <span>Ganadores: {giveway.quantityWinners} </span>
                                 <span>fecha del sorteo: {dateFormat(giveway.effectiveDate)} </span>
+                                <span>{giveway.description}</span>
                             </div>
 
                             <article className="flex flex-col  p-2 my-5">

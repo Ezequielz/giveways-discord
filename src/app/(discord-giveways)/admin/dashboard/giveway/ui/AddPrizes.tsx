@@ -1,13 +1,14 @@
 import React from 'react'
 import { PrizesForm } from './PrizesForm'
-import { getGivewayById } from '@/actions';
+import { getGivewayById, getPrizesByGivewayslug } from '@/actions';
 
 interface Props {
-    id: string
-}
+    id: string;
+};
 
-export const AddPrize = async({ id }: Props) => {
+export const AddPrizes = async({ id }: Props) => {
     const { giveway } = await getGivewayById(id);
+   
 
     if (!giveway) {
         return (
@@ -16,8 +17,8 @@ export const AddPrize = async({ id }: Props) => {
             </div>
         )
     };
-    
+    const { prizesOfGiveway } = await getPrizesByGivewayslug(giveway.slug );
   return (
-    <PrizesForm  id={id} quantity={giveway.quantityWinners ?? 1}/>
+    <PrizesForm  id={id} prizesOfGiveway={prizesOfGiveway!}/>
   )
 }
