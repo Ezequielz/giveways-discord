@@ -1,7 +1,7 @@
 'use client'
 import { useEffect, useState } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
-import { useParams, usePathname, useRouter } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import clsx from 'clsx';
 import { getGivewayBySlug, updateGiveway } from '@/actions';
 import { Giveway } from '@prisma/client';

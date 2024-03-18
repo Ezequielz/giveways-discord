@@ -1,5 +1,6 @@
 import { Give, Title } from "@/components";
 import { notFound } from "next/navigation";
+import { Suspense } from "react";
 
 
 interface Props {
@@ -7,7 +8,7 @@ interface Props {
     slug: string
   }
 }
-export default function ({params}: Props) {
+export default function ({ params }: Props) {
   const slug = params.slug;
 
 
@@ -16,9 +17,11 @@ export default function ({params}: Props) {
   }
   return (
     <div>
-      <Title title="Sortear!"/>
+      <Title title="Sortear!" />
+      <Suspense fallback={ <div>Cargando participantes</div> }>
 
-      <Give  slug={slug}/>
+        <Give slug={slug} />
+      </Suspense>
     </div>
   );
 }

@@ -3,7 +3,7 @@
 import { auth } from '@/auth.config';
 import { sleep } from '@/helpers';
 import prisma from '@/lib/prisma';
-import { Role } from '@prisma/client';
+import { Role, StatusGiveway } from '@prisma/client';
 
 export const setWinner = async (userId: string, givewayId: string, participantId: string, position: number) => {
     const session = await auth()
@@ -25,6 +25,7 @@ export const setWinner = async (userId: string, givewayId: string, participantId
                 id: givewayId,
             },
             data: {
+                status: StatusGiveway.finalizado,
                 participants: {
                     update: {
                         where: {

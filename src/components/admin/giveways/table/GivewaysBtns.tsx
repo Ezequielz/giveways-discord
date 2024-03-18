@@ -1,13 +1,16 @@
 'use client'
 import { deleteGiveway } from '@/actions';
+import { StatusGiveway } from '@prisma/client';
 import Link from 'next/link'
 
 interface Props {
     id: string;
     slug: string;
+    status: StatusGiveway
 }
 
-export const GivewaysBtns = ({ id, slug }: Props) => {
+export const GivewaysBtns = ({ id, slug, status }: Props) => {
+   
 
     const handleDelete = async () => {
         await deleteGiveway(id)
@@ -21,7 +24,7 @@ export const GivewaysBtns = ({ id, slug }: Props) => {
                     href={`/admin/dashboard/give/${slug}`}
                     className='bg-orange-500 px-2 py-1 hover:bg-orange-600 rounded-xl text-white'>
 
-                    sortear
+                    {status === StatusGiveway.finalizado ? 'ver' : 'sortear'}
                 </Link>
                 {/* </Link> */}
 

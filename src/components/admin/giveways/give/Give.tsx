@@ -19,7 +19,7 @@ export const Give = async ({ slug }: Props) => {
     const { participants } = await getParticipantByGiveway(giveway!.id)
     const { ok, participantsWins } = await checkWinner(giveway.id)
 
-
+    
     return (
         <div>
             <Title title={giveway!.name} />

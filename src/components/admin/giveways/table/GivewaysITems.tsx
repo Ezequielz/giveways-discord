@@ -49,7 +49,7 @@ export const GivewaysITems = async ({ status }: Props) => {
                             className="px-6 text-sm leading-5  whitespace-no-wrap border-b border-gray-200">
                             {dateFormat(giveway.effectiveDate)}</td>
 
-                        <GivewaysBtns id={giveway.id} slug={giveway.slug} />
+                        <GivewaysBtns id={giveway.id} slug={giveway.slug} status={giveway.status} />
 
 
                     </tr>
