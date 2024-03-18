@@ -1,5 +1,6 @@
 
 
+export * from './admin/giveways/give/Give';
 export * from './admin/giveways/table/GivewaysTable';
 export * from './admin/ui/AdminAside';
 export * from './admin/users/table/UserTable';

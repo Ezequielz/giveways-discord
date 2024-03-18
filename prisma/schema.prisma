@@ -99,14 +99,16 @@ model Giveway {
 }
 
 model Participant {
+  id         String   @id @default(uuid())
   user       User     @relation(fields: [userId], references: [id])
   userId     String
   giveaway   Giveway  @relation(fields: [giveawayId], references: [id], onDelete: Cascade)
   giveawayId String
   createdAt  DateTime @default(now())
   winner     Boolean  @default(false)
+  position   Int?
 
-  @@id([userId, giveawayId])
+  // @@id([userId, giveawayId])
 }
 
 model Prize {
@@ -114,7 +116,7 @@ model Prize {
   name        String
   description String?
   image       String?
-  position    Int @default(1)
+  position    Int      @default(1)
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 

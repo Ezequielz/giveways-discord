@@ -9,7 +9,7 @@ interface Props {
 
 export const GivewaysBtns = ({ id, slug }: Props) => {
 
-    const handleDelete = async() => {
+    const handleDelete = async () => {
         await deleteGiveway(id)
     }
     return (
@@ -17,26 +17,24 @@ export const GivewaysBtns = ({ id, slug }: Props) => {
 
             <td className="px-6 text-sm leading-5  whitespace-no-wrap border-b border-gray-200">
                 {/* <Link href={`/giveway/${giveway.slug}/sort`} > */}
-                <button
-                className='bg-orange-500 px-2 py-1 hover:bg-orange-600 rounded-xl text-white'>
+                <Link
+                    href={`/admin/dashboard/give/${slug}`}
+                    className='bg-orange-500 px-2 py-1 hover:bg-orange-600 rounded-xl text-white'>
 
                     sortear
-                </button>
+                </Link>
                 {/* </Link> */}
 
 
             </td>
             <td className="px-6 text-sm leading-5  whitespace-no-wrap border-b border-gray-200">
-                <Link href={`/admin/dashboard/giveway/${slug}`} >
-                <button
-                className='bg-cyan-500 px-2 py-1 hover:bg-cyan-600 rounded-xl text-white'>
+                <Link href={`/admin/dashboard/giveway/${slug}`}
+                    className='bg-cyan-500 px-2 py-1 hover:bg-cyan-600 rounded-xl text-white'>
                     editar
-
-                </button>
                 </Link>
             </td>
             <td className="px-6 text-sm leading-5  whitespace-no-wrap border-b border-gray-200">
-              
+
                 <button
                     onClick={() => handleDelete()}
                     className='bg-red-500 px-2 py-1 hover:bg-red-600 rounded-xl text-white'
@@ -44,7 +42,7 @@ export const GivewaysBtns = ({ id, slug }: Props) => {
 
                     eliminar
                 </button>
-                
+
 
             </td>
         </>

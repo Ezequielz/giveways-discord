@@ -62,19 +62,40 @@ export const addParticipantBySlugGiveway = async (slug: string) => {
             }
         }
 
-        await prisma.giveway.update({
+        const participantExistInGiveway = await prisma.participant.findFirst({
             where: {
-                id: givewayExist.id,
-                status: StatusGiveway.activo
-            },
+                giveawayId: givewayExist.id,
+                userId: session.user.id,
+            }
+        });
+
+        if (participantExistInGiveway) {
+            return {
+                ok: false,
+                message: 'Ya estás participando en el sorteo'
+            }
+        
+        }
+
+        await prisma.participant.create({
             data: {
-                participants: {
-                    create: {
-                        userId: session.user.id,
-                    }
-                }
+                giveawayId: givewayExist.id,
+                userId: session.user.id,
             }
         })
+        // await prisma.giveway.update({
+        //     where: {
+        //         id: givewayExist.id,
+        //         status: StatusGiveway.activo
+        //     },
+        //     data: {
+        //         participants: {
+        //             create: {
+        //                 userId: session.user.id,
+        //             }
+        //         }
+        //     }
+        // })
 
         //Revalidate Path
 

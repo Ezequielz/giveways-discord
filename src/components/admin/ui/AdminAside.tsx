@@ -16,6 +16,7 @@ const menu = [
         label: 'Usuarios',
     },
    
+   
 ]
 
 export const AdminAside = () => {

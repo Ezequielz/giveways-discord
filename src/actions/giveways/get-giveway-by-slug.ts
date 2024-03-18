@@ -21,6 +21,7 @@ export const getGivewayBySlug = async (slug: string, status?: StatusGiveway) => 
                     select: {
                         user: {
                             select: {
+                                id: true,
                                 name: true,
                                 image: true,
                                 discordId: true
@@ -31,11 +32,13 @@ export const getGivewayBySlug = async (slug: string, status?: StatusGiveway) => 
                 }
             }
         })
+       
 
       
         return {
             ok: true,
             giveway: giveway,
+
         }
 
 
