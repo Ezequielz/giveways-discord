@@ -1,7 +1,7 @@
 'use client'
 import { useEffect, useState } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
-import { usePathname, useRouter } from 'next/navigation';
+import { useParams, usePathname, useRouter } from 'next/navigation';
 import clsx from 'clsx';
 import { getGivewayBySlug, updateGiveway } from '@/actions';
 import { Giveway } from '@prisma/client';
@@ -22,8 +22,7 @@ export const GivewayEdit = ({ slug }: Props) => {
             participantLimit: 0
         }
     });
-    const path = usePathname();
-
+    
     useEffect(() => {
         if (!slug) return;
 
@@ -54,15 +53,25 @@ export const GivewayEdit = ({ slug }: Props) => {
     const onSubmit: SubmitHandler<Giveway> = async (data) => {
         setErrorMessage('');
 
+        data.slug = data.name
+        .trim()
+        .toLowerCase()
+        .replace(/\s+/g, '_') //  espacios con guiones bajos
+        .replace(/[^\w\-]+/g, '') // quitar todos los caracteres no alfanuméricos excepto guiones bajos
+        .replace(/\-\-+/g, '_') // quitar múltiples guiones bajos con uno solo
+        .replace(/^-+/, '') // quitar los guiones bajos del principio del texto
+        .replace(/-+$/, ''); // quitar los guiones bajos del fin del texto
+    // server action
+
 
         const edit = await updateGiveway(data);
         if (!edit.ok) {
-            setErrorMessage(edit.message)
+            setErrorMessage(edit.message ?? '')
             return;
         };
-        router.replace(`${path}?id=${edit.giveway?.id}`);
+        router.replace(`/admin/dashboard/giveway/${data.slug}`);
+       
         return;
-
 
     };
 
@@ -173,15 +182,10 @@ export const GivewayEdit = ({ slug }: Props) => {
 
                     </div>
 
-
                 </div>
-
-
-
-
-                <div className='relative flex justify-center p-1 mb-1'>
-                    <span className="text-red-500  m-auto items-center absolute">{errorMessage}</span>
-                </div>
+                    <div className='relative flex justify-center p-1 mb-10'>
+                        <span className="text-red-500  m-auto items-center absolute">{errorMessage}</span>
+                    </div>
 
             </div>
 

@@ -26,12 +26,15 @@ export const Giveways = async () => {
                         <div >
                             <div className="">
                                 <Subtitle subtitle={`${giveway.name}`} />
-                                <div className="flex text-sm justify-center gap-1 my-1">
+                                {/* <div className="flex text-sm justify-center gap-1 my-1">
                                     <span className="bg-violet-500 px-2 rounded-xl">{giveway.quantityWinners} premios</span>
                                     <span className="bg-violet-500 px-2 rounded-xl">{giveway.participants.length} participantes</span>
                                     <span className="bg-violet-500 px-2 rounded-xl">{dateFormat(giveway.effectiveDate)}</span>
 
-                                </div>
+                                </div> */}
+                                <span>
+                                    {giveway.description}
+                                </span>
                             </div>
                             <article className="flex flex-col justify-center items-start p-2 gap-2 ">
                                 {

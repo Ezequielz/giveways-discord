@@ -15,7 +15,7 @@ interface Props {
 
 
 export const PrizeForm = ({prize, slug, index}: Props) => {
-    console.log(prize)
+    // console.log(prize)
     const { register, handleSubmit, formState: { errors, isSubmitting } } = useForm<Prize>({
         defaultValues: {
             name: prize.name,

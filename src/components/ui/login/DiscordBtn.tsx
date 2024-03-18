@@ -1,11 +1,13 @@
 'use client'
 import { Login } from "@/actions";
+import clsx from "clsx";
 
 interface Props {
-    label?: string
+    label?: string;
+    nav?: boolean;
 }
 
-export const DiscordBtn = ({ label }: Props) => {
+export const DiscordBtn = ({ label, nav }: Props) => {
 
     const oauthLogin = async () => {
   
@@ -26,7 +28,15 @@ export const DiscordBtn = ({ label }: Props) => {
         <button
             onClick={oauthLogin}
             type="button"
-            className="w-fit justify-center flex items-center bg-white border border-gray-300 rounded-lg shadow-md px-6 py-2 text-sm font-medium text-gray-800 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500">
+            className={
+                clsx(
+                    "justify-center flex items-center",
+                    {
+                        "  bg-white border border-gray-300 rounded-lg shadow-md px-6 py-2 text-sm font-medium text-gray-800 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500" : !nav,
+                        "hover:text-white hover:scale-110": nav
+                    }
+                )
+            }>
 
             <svg className="h-6 w-6 mr-2"
                 width="800px" height="800px" viewBox="0 -28.5 256 256" version="1.1" preserveAspectRatio="xMidYMid">

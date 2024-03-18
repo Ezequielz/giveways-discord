@@ -15,6 +15,10 @@ export * from './admin/giveways/update-giveway';
 export * from './admin/prizes/create-prize';
 export * from './admin/prizes/get-prizes-by-giveway-slug';
 export * from './admin/prizes/update-prize';
+export * from './admin/users/get-all-users';
+export * from './admin/users/delete-user';
+export * from './admin/users/set-user-role';
+export * from './admin/users/set-user-status';
 
 export * from './giveways/add-participant-by-slug-giveway';
 export * from './giveways/check-user-participate';

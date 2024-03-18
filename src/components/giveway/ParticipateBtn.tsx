@@ -3,7 +3,6 @@
 import { useEffect, useState } from 'react';
 import { addParticipantBySlugGiveway, checkUserMember, checkUserParticipate } from '@/actions';
 import { useRouter } from 'next/navigation';
-import { set } from 'react-hook-form';
 
 interface Props {
     slug: string;

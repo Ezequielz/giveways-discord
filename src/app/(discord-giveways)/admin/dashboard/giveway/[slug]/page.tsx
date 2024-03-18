@@ -10,7 +10,7 @@ interface Props {
 export default async function ({ params }: Props) {
 
     const slug = params.slug;
-
+    console.log(slug)
     return (
         <div>
             <GivewayEdit slug={slug} />

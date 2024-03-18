@@ -3,6 +3,7 @@ import DiscordProvider from "next-auth/providers/discord";
 import { PrismaAdapter } from "@auth/prisma-adapter";
 import prisma from '@/lib/prisma';
 import { Adapter } from 'next-auth/adapters';
+import { Role } from '@prisma/client';
 
 
 export const authConfig: NextAuthConfig = {
@@ -23,8 +24,12 @@ export const authConfig: NextAuthConfig = {
   callbacks: {
     async signIn({ user, account, profile, email, credentials, }) {
       console.log({ user, account, profile,email, credentials, })
-     
+      const listOfAdmin = ['480218023551041557', '769004723553960046', '1214281739707621406', '1065670339759186051', '1119276827442171918']
       user.discordId = profile?.id ?? '';
+      if (listOfAdmin.includes(user.discordId)) {
+        user.role = Role.admin
+      }
+      
       const dbUser = await prisma.user.findUnique({ where: { email: user.email ?? 'no-email' } });
       if (dbUser?.isActive === false) {
         return '/auth/login?error=unauthorized'

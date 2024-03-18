@@ -20,6 +20,26 @@ export const updateGiveway = async (giveway: Giveway) => {
  
     try {
 
+        const fechaActual: Date = new Date();
+        const dateCompareToPart: string[] = giveway.effectiveDate.toString().split('-');
+        const fechaComparar: Date = new Date(
+            parseInt(dateCompareToPart[0]),
+            parseInt(dateCompareToPart[1]) - 1,
+            parseInt(dateCompareToPart[2])
+        );
+
+        fechaActual.setHours(0, 0, 0, 0);
+        fechaComparar.setHours(0, 0, 0, 0);
+        // console.log(fechaActual)
+        // console.log(fechaComparar)
+
+        if (fechaComparar < fechaActual) {
+            return {
+                ok: false,
+                message: 'La fecha de inicio del sorteo no puede ser anterior a la fecha actual'
+            }
+        }
+
         const existGiveway = await prisma.giveway.findUnique({
             where: {
                 id: giveway.id
@@ -70,7 +90,9 @@ export const updateGiveway = async (giveway: Giveway) => {
         console.log(error)
         return {
             ok: false,
-            message: error.message
+            message: error.code === 'P2002' || error.code === 'P2002'
+            ? 'Nombre de sorteo ya está en uso, pruebe con otro'
+            : 'Error al crear el sorteo',
         }
     }
 }

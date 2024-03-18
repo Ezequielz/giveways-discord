@@ -31,7 +31,7 @@ export const Navbar = async () => {
             {/* MENU */}
             {
                 !session?.user ? (
-                    <DiscordBtn />
+                    <DiscordBtn nav label='Login'/>
 
                 ) : (
                     <Avatar img={session.user.image!}/>

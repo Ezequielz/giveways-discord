@@ -34,13 +34,31 @@ export const addParticipantBySlugGiveway = async (slug: string) => {
             },
             select: {
                 id: true,
+                participantLimit: true
             }
         })
+
+      
+
+     
 
         if (!givewayExist) {
             return {
                 ok: false,
                 message: 'Giveway no existe'
+            }
+        }
+
+        const participantOfGiveway = await prisma.participant.count({
+            where: {
+                giveawayId: givewayExist.id,
+            }
+        })
+
+        if (givewayExist.participantLimit !== null && givewayExist.participantLimit >= participantOfGiveway) {
+            return {
+                ok: false,
+                message: 'Limite de participantes alcanzado'
             }
         }
 

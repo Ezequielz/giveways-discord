@@ -15,7 +15,7 @@ export const Avatar = ({ img, alt = 'imagen' }: Props) => {
             alt={alt}
             width={30}
             height={30}
-            className="cursor-pointer rounded-full"
+            className="cursor-pointer rounded-full hover:scale-110"
         />
     )
 }

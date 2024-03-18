@@ -17,7 +17,8 @@ export const GivewaysBtns = ({ id, slug }: Props) => {
 
             <td className="px-6 text-sm leading-5  whitespace-no-wrap border-b border-gray-200">
                 {/* <Link href={`/giveway/${giveway.slug}/sort`} > */}
-                <button>
+                <button
+                className='bg-orange-500 px-2 py-1 hover:bg-orange-600 rounded-xl text-white'>
 
                     sortear
                 </button>
@@ -27,7 +28,8 @@ export const GivewaysBtns = ({ id, slug }: Props) => {
             </td>
             <td className="px-6 text-sm leading-5  whitespace-no-wrap border-b border-gray-200">
                 <Link href={`/admin/dashboard/giveway/${slug}`} >
-                <button>
+                <button
+                className='bg-cyan-500 px-2 py-1 hover:bg-cyan-600 rounded-xl text-white'>
                     editar
 
                 </button>
@@ -37,6 +39,7 @@ export const GivewaysBtns = ({ id, slug }: Props) => {
               
                 <button
                     onClick={() => handleDelete()}
+                    className='bg-red-500 px-2 py-1 hover:bg-red-600 rounded-xl text-white'
                 >
 
                     eliminar
